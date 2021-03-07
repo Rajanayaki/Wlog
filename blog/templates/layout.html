@@ -1,0 +1,91 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <!--jQuery library--> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!--Latest compiled and minified JavaScript--> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layout-style.css') }}">	
+	<!-- Syncfusion Essential JS 2 Styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" /> 
+    <!-- Syncfusion Essential JS 2 Scripts -->
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+	<!--Google Fonts-->
+	<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&display=swap" rel="stylesheet">
+	{%if title %}
+		<title>Wlog - {{title}}</title>
+	{%else%}
+		<title>Wlog</title>
+	{%endif%}
+</head>
+<body>
+	<nav class="navbar  navbar-inverse navbar-fixed-top navbar-custom">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                     <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Wlog</a>
+            </div>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+							<a href="{{url_for('main.home')}}">Home</a>
+					</li>
+						{% if current_user.is_authenticated %}
+					<li>
+							<a href="{{url_for('posts.new_post')}}">Create Post</a>
+					</li>
+					<li>
+							<a href="{{url_for('users.account')}}">Account</a>
+					</li>
+					<li>
+							<a href="{{url_for('users.logout')}}">Logout</a>
+					</li>
+						{% else %}
+					<li>
+							<a href="{{url_for('users.login')}}">Login</a>
+                    </li>
+                    <li>
+						
+                        <a href="{{url_for('users.register')}}">New User?</a>
+                    </li>
+					{% endif %}
+                </ul>
+            </div>
+        </div> 
+    </nav>
+	<div class="container">
+		<div class="row rowstyle">
+			<div class="col-sm-8">
+				{% with messages=get_flashed_messages(with_categories=true) %}
+					{% if messages%}
+						{% for category,message in messages %}
+							<div class="alert alert-{{category}}">
+								{{message}}
+							</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+				{% block content %} {% endblock %}
+			</div>
+			<div class="col-sm-4">
+				<h2 class="description">Wlog - Words Worth Sharing!</h2>
+				<div class="sidebarsection" id="element"/>					
+					<script>
+						// initialize the Calendar component
+						var calendar = new ej.calendars.Calendar();
+				 
+						// Render the initialized button.
+						calendar.appendTo('#element')
+					</script>
+				</div>
+		</div>				
+	</div>
+
+</body>
+</html>

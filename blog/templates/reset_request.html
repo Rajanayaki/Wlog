@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="box">
+	<form method="POST" action="">
+	    <h2>Request Reset</h2>
+		{{ form.hidden_tag() }}
+	    <fieldset class="form-group">
+			<div class="form-group">
+				{{form.email.label(class="form-control-label") }}
+				{% if form.email.errors %}
+					{{form.email(class="form-control-label-lg") }}					
+					<div class="invalid-feedback">
+						{% for error in form.email.errors %}
+							<span>{{error}}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{form.email(class="form-control-label-lg") }}				
+				{% endif %}
+			</div>
+		</fieldset>  
+		<div>	
+			<center>	
+				<button class="btn btn-two btn-three">Reset</button>		
+			</center>
+		</div>		
+	</form>
+	</div>
+
+{% endblock content %}
